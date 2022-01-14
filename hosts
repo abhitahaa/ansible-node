@@ -1,7 +1,7 @@
 [webserver]
-ec2-54-159-138-77.compute-1.amazonaws.com ansible_python_interpreter=/usr/bin/python3
-#ec2-34-201-241-167.compute-1.amazonaws.com ansible_python_interpreter=/usr/bin/python3
+ec2-5455-15933-133338-77.compute343-1.amazonaws.com ansible_python_interpreter=/usr/bin/python3
+
 
 [webserver:vars]
-ansible_ssh_private_key_file=~/Downloads/ansible.pem
+ansible_ssh_private_key_file=~/Downloads/
 ansible_user=ubuntu
