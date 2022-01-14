@@ -41,3 +41,7 @@
       async: 1000 # async keyword can tell Ansible how long the task should be allowed to run before Ansible gives it up and time out
       poll: 0 # But How would ansible track the status of this job invoked in the background? How frequent it would check if the task is completed or not. thats where poll comes into picture
 
+    - name: Ensure app is running
+      shell: ps aux | grep node
+      register: app_status     #we are storing the value of the shell execution
+    - debug: msg={{app_status.stdout_lines}} #we are debuging the shell executed message.
