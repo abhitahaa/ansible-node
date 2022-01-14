@@ -1,0 +1,25 @@
+---
+- name: Configure tomcat
+  hosts: webserver
+  become: yes
+  become_user: root
+  tasks:
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /tomcat_deployment
+        state: directory
+        mode: '0755'
+
+    - name: copy files from local to server
+      ansible.builtin.copy:
+        src: ~/Documents/bootcamp-projects/ansible-aws/tommy.sh
+        dest: /tomcat_deployment
+        mode: '0755'
+
+    - name: Execute the shell
+      command: sh /tomcat_deployment/tommy.sh
+      register: command_output
+    - debug:
+        var: command_output.stdout_lines
+
+

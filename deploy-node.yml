@@ -1,0 +1,43 @@
+---
+- name: Install node & npm
+  hosts: webserver
+  become: yes
+  become_user: root
+  tasks:
+    - name: Update apt repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+    - name: Install node js and npm
+      apt:
+        pkg:
+          - nodejs
+          - npm
+
+- name: Deploy node js Application
+  hosts: webserver
+  become: yes
+  become_user: root
+  tasks:
+    - name: Copy nodejs folder to a server
+      copy:
+        src: ~/Documents/bootcamp-projects/nodejsapp/node-app/nodejs-app-1.0.0.tgz
+        dest: /root/app-1.0.0.tgz
+
+    - name: unpack the tar file
+      unarchive:
+        src: /root/app-1.0.0.tgz
+        dest: /root/
+        remote_src: yes   # we have to specify this otherwise it will look for this file locally
+
+    - name: Install dependencies
+      npm:
+        path: /root/package/
+        remote_src: yes   # we have to specify this otherwise it will look for this file locally
+
+    - name: Start the application
+      command:
+        chdir: /root/package/app
+        cmd: node server
+      async: 1000 # async keyword can tell Ansible how long the task should be allowed to run before Ansible gives it up and time out
+      poll: 0 # But How would ansible track the status of this job invoked in the background? How frequent it would check if the task is completed or not. thats where poll comes into picture
+
