@@ -12,7 +12,7 @@
 
     - name: copy files from local to server
       ansible.builtin.copy:
-        src: ~/Documents/bootcamp-projects/ansible-aws/tommy.sh
+        src: ~/tommy.sh
         dest: /tomcat_deployment
         mode: '0755'
 
